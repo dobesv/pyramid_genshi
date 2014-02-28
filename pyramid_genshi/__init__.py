@@ -63,7 +63,9 @@ class TranslationStringAdaptor(gettext.NullTranslations):
 def renderer_factory(info):
     # TODO: this is an internal API? maybe we should use a better way
     # to deal with it
-    return renderers.template_renderer_factory(info, GenshiTemplateRenderer)
+    try: from pyramid.renderers import template_renderer_factory
+    except ImportError: from pyramid_chameleon.renderer import template_renderer_factory
+    return template_renderer_factory(info, GenshiTemplateRenderer)
         
 
 class GenshiTemplateRenderer(object):
